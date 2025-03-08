@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="account-card-content">
-                <form class="form-horizontal m-t-30" method="POST" action="{{ route('login') }}">
+                <form class="form-horizontal m-t-30" method="POST" action="{{ route('login.process') }}">
                     @csrf
 
                     <div class="form-group">
@@ -41,7 +41,7 @@
                             </span>
                         @enderror
                     </div>
-                   
+
                     <div class="form-group row m-t-20">
                         <div class=" col-sm-6">
                             <div class="form-check">

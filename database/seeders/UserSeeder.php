@@ -6,11 +6,9 @@ use DB;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
-
-class DatabaseSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -19,19 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $user= User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('admin@admin.com'),
+            'name' => 'employee',
+            'email' => 'employee@admin.com',
+            'password' => Hash::make('employee@admin.com'),
         ]);
         $role = Role::create([
-            'slug' => 'admin',
-            'name' => 'Adminstrator',
+            'slug' => 'user',
+            'name' => 'User',
         ]);
         $user->roles()->sync($role->id);
-        $this->call([
-            UserSeeder::class,
-        ]);
     }
 }

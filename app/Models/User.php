@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models; 
+namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +14,7 @@ class User extends Authenticatable
     {
         return 'name';
     }
-    
+
     public function roles()
     {
         return $this->belongsToMany('App\Models\Role', 'role_users', 'user_id', 'role_id');
@@ -47,15 +47,15 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'email', 'password', 'pin_code',
+        'name', 'email', 'password','role', 'pin_code',
     ];
 
-  
+
     protected $hidden = [
         'pin_code','password', 'remember_token',
     ];
 
-  
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

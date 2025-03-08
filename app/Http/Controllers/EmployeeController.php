@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Employee;
-use App\Models\Role;
 use App\Models\Schedule;
 use App\Http\Requests\EmployeeRec;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EmployeeController extends Controller
 {
-   
+
     public function index()
     {
-        
-        return view('admin.employee')->with(['employees'=> Employee::all(), 'schedules'=>Schedule::all()]);
+
+        return view('admin.employee')->with(['employees' => Employee::all(), 'schedules' => Schedule::all()]);
     }
 
     public function store(EmployeeRec $request)
@@ -29,23 +30,28 @@ class EmployeeController extends Controller
         $employee->pin_code = bcrypt($request->pin_code);
         $employee->save();
 
-        if($request->schedule){
+        if ($request->schedule) {
 
             $schedule = Schedule::whereSlug($request->schedule)->first();
 
             $employee->schedules()->attach($schedule);
         }
 
-        // $role = Role::whereSlug('emp')->first();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => 'user',
+            'password' => Hash::make($request->email),
+        ]);
 
-        // $employee->roles()->attach($role);
+        $user->roles()->attach(1);
 
-        flash()->success('Success','Employee Record has been created successfully !');
+        flash()->success('Success', 'Employee Record has been created successfully !');
 
         return redirect()->route('employees.index')->with('success');
     }
 
- 
+
     public function update(EmployeeRec $request, Employee $employee)
     {
         $request->validated();
@@ -65,7 +71,7 @@ class EmployeeController extends Controller
             $employee->schedules()->attach($schedule);
         }
 
-        flash()->success('Success','Employee Record has been Updated successfully !');
+        flash()->success('Success', 'Employee Record has been Updated successfully !');
 
         return redirect()->route('employees.index')->with('success');
     }
@@ -74,7 +80,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        flash()->success('Success','Employee Record has been Deleted successfully !');
+        flash()->success('Success', 'Employee Record has been Deleted successfully !');
         return redirect()->route('employees.index')->with('success');
     }
 }

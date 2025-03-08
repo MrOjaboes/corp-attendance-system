@@ -2,12 +2,19 @@
 
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FingerDevicesControlller;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login/process', 'process')->name('login.process');
+});
 Route::get('attended/{user_id}', '\App\Http\Controllers\AttendanceController@attended' )->name('attended');
 Route::get('attended-before/{user_id}', '\App\Http\Controllers\AttendanceController@attendedBefore' )->name('attendedBefore');
 Auth::routes(['register' => false, 'reset' => false]);
@@ -16,11 +23,12 @@ Route::group(['middleware' => ['auth', 'Role'], 'roles' => ['admin']], function 
     Route::resource('/employees', '\App\Http\Controllers\EmployeeController');
     Route::resource('/employees', '\App\Http\Controllers\EmployeeController');
     Route::get('/attendance', '\App\Http\Controllers\AttendanceController@index')->name('attendance');
-  
+
     Route::get('/latetime', '\App\Http\Controllers\AttendanceController@indexLatetime')->name('indexLatetime');
     Route::get('/leave', '\App\Http\Controllers\LeaveController@index')->name('leave');
     Route::get('/overtime', '\App\Http\Controllers\LeaveController@indexOvertime')->name('indexOvertime');
 
+    Route::get('/admin', '\App\Http\Controllers\AdminController@index')->name('home');
     Route::get('/admin', '\App\Http\Controllers\AdminController@index')->name('admin');
 
     Route::resource('/schedule', '\App\Http\Controllers\ScheduleController');
@@ -28,7 +36,7 @@ Route::group(['middleware' => ['auth', 'Role'], 'roles' => ['admin']], function 
     Route::get('/check', '\App\Http\Controllers\CheckController@index')->name('check');
     Route::get('/sheet-report', '\App\Http\Controllers\CheckController@sheetReport')->name('sheet-report');
     Route::post('check-store','\App\Http\Controllers\CheckController@CheckStore')->name('check_store');
-    
+
     // Fingerprint Devices
     Route::resource('/finger_device', '\App\Http\Controllers\BiometricDeviceController');
 
@@ -44,7 +52,7 @@ Route::group(['middleware' => ['auth', 'Role'], 'roles' => ['admin']], function 
 
         return back();
     })->name('finger_device.clear.attendance');
-    
+
 
 });
 
@@ -54,7 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-    
+
 
 });
 
