@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-       // $schedule->command('attendance:mark')->dailyAt('10:00');
-        $schedule->command('attendance:mark')->everyMinute();
+        $schedule->command('attendance:mark')->dailyAt('10:00')->WithoutOverlapping();
+        //$schedule->command('attendance:mark')->everyMinute();
     }
 
     /**
