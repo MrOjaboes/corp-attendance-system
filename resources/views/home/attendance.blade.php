@@ -83,44 +83,7 @@
     });
 </script>
 @endsection
-{{-- <script>
-    @php
 
-        $dre = Carbon\Carbon::parse($config->time_in)->format('F d, Y H:i:s') ;
-        $end_time = Carbon\Carbon::parse($config->time_out)->format('F d, Y H:i:s') ;
-           $dateTime = strtotime($dre);
-           $dateTime2 = strtotime($end_time);
-           $getDateTime = date("F d, Y H:i:s", $dateTime);
-           $getDateTime2 = date("F d, Y H:i:s", $dateTime2);
-        @endphp
-
-        var countDownDate = new Date("<?php echo "$getDateTime"; ?>").getTime();
-        var countEndDate2 = new Date("<?php echo "$getDateTime2"; ?>").getTime();
-
-        // Update the count down every 1 second
-        var x = setInterval(function() {
-            var now = new Date().getTime();
-            var aBt = document.getElementById("Auction");
-            var count = document.getElementById("counter");
-            var viewOpt = document.getElementById("viewAuction");
-            // Find the distance between now an the count down date
-            var distance = countEndDate2 - now;
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            // Output the result in an element with id="counter"11
-            document.getElementById("counter").innerHTML = days + "d " + hours + "h " +
-            minutes + "m " + seconds + "s";
-            // If the count down is over, write some text
-            if (distance < 0) {
-               clearInterval(x);
-                // document.getElementById("Auction").style.display = "block";
-                //location.reload();
-            }
-        }, 1000);
-</script> --}}
 <style>
     .checkmark {
   position: absolute;

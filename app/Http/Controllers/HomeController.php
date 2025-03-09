@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function attendance()
     {
         $employee = Employee::find(auth()->user()->employee_id);
-        $now = now();
+        $now = now()->setTimezone('Africa/Lagos');
         $startTime = $now->copy()->startOfDay(); // 12:00 AM
         $endTime = $now->copy()->startOfDay()->addHours(10); // 10:00 AM
 
