@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     function index()
     {
         return redirect()->route('login');
@@ -25,7 +29,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'password' => 'rewuired|min:6'
+            'password' => 'required|min:6'
         ]);
 
 
@@ -52,6 +56,15 @@ class LoginController extends Controller
             return redirect()->back()->with('message', 'Username And Password Do not Match');
         }
     }
-   
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
 
 }

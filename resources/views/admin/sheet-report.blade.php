@@ -11,26 +11,25 @@
                     <thead>
                         <tr >
 
-                            <th>Employee Name</th>
-                            <th>Employee Position</th>
-                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Staff ID</th>
                             @php
                                 $today = today();
                                 $dates = [];
-                                
+
                                 for ($i = 1; $i < $today->daysInMonth + 1; ++$i) {
                                     $dates[] = \Carbon\Carbon::createFromDate($today->year, $today->month, $i)->format('Y-m-d');
                                 }
-                                
+
                             @endphp
                             @foreach ($dates as $date)
                             <th style="">
-                            
-                                
+
+
                                     {{ $date }}
-                            
+
                         </th>
-                      
+
 
                             @endforeach
 
@@ -49,7 +48,6 @@
 
                             <tr>
                                 <td>{{ $employee->name }}</td>
-                                <td>{{ $employee->position }}</td>
                                 <td>{{ $employee->id }}</td>
 
 
@@ -61,19 +59,15 @@
 
 
                                     @php
-                                        
+
                                         $date_picker = \Carbon\Carbon::createFromDate($today->year, $today->month, $i)->format('Y-m-d');
-                                        
+
                                         $check_attd = \App\Models\Attendance::query()
                                             ->where('emp_id', $employee->id)
                                             ->where('attendance_date', $date_picker)
                                             ->first();
-                                        
-                                        $check_leave = \App\Models\Leave::query()
-                                            ->where('emp_id', $employee->id)
-                                            ->where('leave_date', $date_picker)
-                                            ->first();
-                                        
+
+
                                     @endphp
                                     <td>
 
@@ -85,24 +79,13 @@
                                                  @else
                                                  <i class="fa fa-check text-danger"></i>
                                                  @endif
-                                               
+
                                             @else
                                             <i class="fas fa-times text-danger"></i>
                                             @endif
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                          
-                                            @if (isset($check_leave))
-                                            @if ($check_leave->status==1)
-                                            <i class="fa fa-check text-success"></i>
-                                            @else
-                                            <i class="fa fa-check text-danger"></i>
-                                            @endif
-                                          
-                                       @else
-                                       <i class="fas fa-times text-danger"></i>
-                                       @endif
-                                        
+
+
 
                                         </div>
 

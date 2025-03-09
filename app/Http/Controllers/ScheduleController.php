@@ -2,37 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Schedule;
 use App\Http\Requests\ScheduleEmp;
 
 class ScheduleController extends Controller
 {
-   
+
     public function index()
     {
-     
-        return view('admin.schedule')->with('schedules', Schedule::all());
-        flash()->success('Success','Schedule has been created successfully !');
 
+        $schedule = schedule::first();
+        return view('admin.schedule', compact('schedule'));
+        flash()->success('Success', 'Schedule has been created successfully !');
     }
 
 
     public function store(ScheduleEmp $request)
     {
         $request->validated();
+        schedule::updateOrCreate([
+            'user_id' => auth()->user()->id,
+        ], [
+            'time_in' => Carbon::parse($request->time_in),
+            'time_out' => Carbon::parse($request->time_out),
+        ]);
 
-        $schedule = new schedule;
-        $schedule->slug = $request->slug;
-        $schedule->time_in = $request->time_in;
-        $schedule->time_out = $request->time_out;
-        $schedule->save();
-
-
-
-
-        flash()->success('Success','Schedule has been created successfully !');
+        flash()->success('Success', 'Schedule has been created successfully !');
         return redirect()->route('schedule.index');
-
     }
 
     public function update(ScheduleEmp $request, Schedule $schedule)
@@ -42,21 +39,19 @@ class ScheduleController extends Controller
 
         $request->validated();
 
-        $schedule->slug = $request->slug;
+        $schedule->slug = 'ddd';
         $schedule->time_in = $request->time_in;
         $schedule->time_out = $request->time_out;
         $schedule->save();
-        flash()->success('Success','Schedule has been Updated successfully !');
+        flash()->success('Success', 'Schedule has been Updated successfully !');
         return redirect()->route('schedule.index');
-
-
     }
 
-  
+
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();
-        flash()->success('Success','Schedule has been deleted successfully !');
+        flash()->success('Success', 'Schedule has been deleted successfully !');
         return redirect()->route('schedule.index');
     }
 }
