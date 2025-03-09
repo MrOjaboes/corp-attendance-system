@@ -31,7 +31,7 @@ class HomeController extends Controller
         $employee = Employee::find(auth()->user()->employee_id);
         $now = now()->setTimezone('Africa/Lagos');
         $startTime = $now->copy()->startOfDay(); // 12:00 AM
-        $endTime = $now->copy()->startOfDay()->addHours(10); // 10:00 AM
+        $endTime = $now->copy()->startOfDay()->addHours(15); // 10:00 AM
 
         if ($now->greaterThanOrEqualTo($endTime)) {
             // If it's past 10 AM, attendance is closed
@@ -53,33 +53,29 @@ class HomeController extends Controller
     public function CheckStore(Request $request)
     {
 
+        $employee = Employee::find(auth()->user()->employee_id);
+        $current_date = date('Y-m-d');
+        $dataexist = Attendance::whereDate('created_at', $current_date)
+            ->where('emp_id', auth()->user()->employee_id)
+            ->get();
+
+        //dd($dataexist);
+        if (count($dataexist) !== 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'Attendance Already Taken!');
+        }
+
         if (isset($request->attd)) {
-            foreach ($request->attd as $keys => $values) {
-                foreach ($values as $key => $value) {
-                    if ($employee = Employee::whereId(request('emp_id'))->first()) {
-                        if (
-                            !Attendance::whereAttendance_date($keys)
-                                ->whereEmp_id($key)
-                                ->whereType(0)
-                                ->first()
-                        ) {
-                            $data = new Attendance();
-
-                            $data->emp_id = $key;
-                            $emp_req = Employee::whereId($data->emp_id)->first();
-                            $data->attendance_time = date('H:i:s', strtotime($emp_req->schedules->first()->time_in));
-                            $data->attendance_date = $keys;
-
-                            // $emps = date('H:i:s', strtotime($employee->schedules->first()->time_in));
-                            // if (!($emps >= $data->attendance_time)) {
-                            //     $data->status = 0;
-
-                            // }
-                            $data->save();
-                        }
-                    }
-                }
-            }
+            Attendance::create([
+                'emp_id' => auth()->user()->employee_id,
+                'attendance_time' => date('H:i:s'),
+                'attendance_date' => now(),
+                'status' => 1,
+            ]);
+            $employee->update([
+                'status' => 1
+            ]);
         }
         flash()->success('Success', 'You have successfully submited the attendance !');
         return back();

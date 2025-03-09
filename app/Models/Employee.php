@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory, Notifiable;
-    
+
     public function getRouteKeyName()
     {
         return 'name';
     }
     protected $table = 'employees';
     protected $fillable = [
-        'name', 'email', 'pin_code'
+        'name', 'email', 'pin_code','status'
     ];
 
-  
+
     protected $hidden = [
         'pin_code', 'remember_token',
     ];
@@ -52,6 +52,6 @@ class Employee extends Model
     }
 
 
-    
+
 
 }

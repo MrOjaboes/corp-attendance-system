@@ -9,7 +9,6 @@
 
 @section('content')
     <div class="card">
-
         <div class="card-body">
             <h3>{{ ucfirst($employee->name) }}'s Attendance for
                 {{ \Carbon\Carbon::createFromDate(today())->format('D d M, Y') }}</h3>
@@ -21,7 +20,11 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
                     @if ($attendanceOpen)
                     <h5>Time Left to Submit Attendance: <span id="countdown"></span></h5>
 
