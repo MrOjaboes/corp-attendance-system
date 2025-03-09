@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Schedule;
 use App\Http\Requests\EmployeeRec;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -21,25 +22,32 @@ class EmployeeController extends Controller
 
     public function store(EmployeeRec $request)
     {
+        DB::beginTransaction();
+        if ($request) {
+            $employee = Employee::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'pin_code' => rand(100000, 999999),
+            ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'employee_id' => $employee->id,
+                'role' => 'user',
+                'password' => Hash::make($request->email),
+            ]);
 
 
-        $employee = new Employee;
-        $employee->name = $request->name;
-        $employee->email = $request->email;
-        $employee->pin_code = rand(100000, 999999);
-        $employee->save();
+            if ($employee && $user) {
+                DB::commit();
+                flash()->success('Success', 'Employee Record has been created successfully !');
 
+                return redirect()->route('employees.index')->with('success');
+            }
+        }
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => 'user',
-            'password' => Hash::make($request->email),
-        ]);
-
-        flash()->success('Success', 'Employee Record has been created successfully !');
-
-        return redirect()->route('employees.index')->with('success');
+        DB::rollBack();
+        return back();
     }
 
 

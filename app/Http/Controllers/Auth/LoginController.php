@@ -18,7 +18,8 @@ class LoginController extends Controller
     }
     function index()
     {
-        return redirect()->route('login');
+        return view('auth.login');
+        //return redirect()->route('login');
     }
     function showLoginForm()
     {

@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('/employees', '\App\Http\Controllers\EmployeeController');
         Route::get('/attendance', '\App\Http\Controllers\AttendanceController@index')->name('attendance');
-
+        Route::get('/sheet-report', '\App\Http\Controllers\CheckController@sheetReport')->name('sheet-report');
         Route::get('/admin', '\App\Http\Controllers\AdminController@index')->name('admin');
         // Fingerprint Devices
         Route::resource('/finger_device', '\App\Http\Controllers\BiometricDeviceController');
@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/home/attendance', 'CheckStore')->name('staff.attendance-store');
         });
     });
-    
+
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index')->name('profile');
         Route::post('/update', 'updateProfile')->name('profile.update');

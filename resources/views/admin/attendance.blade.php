@@ -2,7 +2,8 @@
 
 @section('css')
     <!-- Table css -->
-    <link href="{{ URL::asset('plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css') }}" rel="stylesheet" type="text/css" media="screen">
+    <link href="{{ URL::asset('plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css') }}" rel="stylesheet" type="text/css"
+        media="screen">
 @endsection
 
 @section('breadcrumb')
@@ -19,7 +20,7 @@
 
 
 @section('content')
-@include('includes.flash')
+    @include('includes.flash')
 
     <div class="row">
         <div class="col-12">
@@ -28,35 +29,36 @@
 
                     <div class="table-rep-plugin">
                         <div class="table-responsive mb-0" data-pattern="priority-columns">
-                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 
                                 <thead>
                                     <tr>
                                         <th data-priority="1">Date</th>
-                                        <th data-priority="2">Employee ID</th>
                                         <th data-priority="3">Name</th>
                                         <th data-priority="4">Time</th>
+                                        <th data-priority="4">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($attendances as $attendance)
-
                                         <tr>
                                             <td>{{ $attendance->attendance_date }}</td>
-                                            <td>{{ $attendance->emp_id }}</td>
                                             <td>{{ $attendance->employee->name }}</td>
                                             <td>{{ $attendance->attendance_time }}
+
+                                            </td>
+                                            <td>
                                                 @if ($attendance->status == 1)
-                                                    <span class="badge badge-primary badge-pill float-right">On Time</span>
-                                                @else
-                                                    <span class="badge badge-danger badge-pill float-right">Late</span>
+                                                    <i class="fa fa-check text-success"></i>
+                                                @endif
+                                                @if ($attendance->status == 0)
+                                                    <i class="fa fa-times text-danger"></i>
                                                 @endif
                                             </td>
 
-
                                         </tr>
-
                                     @endforeach
 
 
@@ -68,14 +70,12 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-
 @endsection
 
 
 @section('script')
     <!-- Responsive-table-->
     <script src="{{ URL::asset('plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js') }}"></script>
-
 @endsection
 
 @section('script')

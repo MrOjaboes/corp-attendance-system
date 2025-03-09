@@ -25,7 +25,7 @@ class MarkAttendance extends Command
                 'attendance_date' => now(),
                 'status' => 0,
             ]);
-            $$employee->update([
+            $employee->update([
                 'status' => 1,
             ]);
         }

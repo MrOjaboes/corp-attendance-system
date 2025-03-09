@@ -5,9 +5,11 @@ namespace Database\Seeders;
 use DB;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -17,15 +19,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user= User::create([
+        $employee = Employee::create([
             'name' => 'employee',
             'email' => 'employee@admin.com',
-            'password' => Hash::make('employee@admin.com'),
+            'pin_code' => rand(100000, 999999),
         ]);
-        $role = Role::create([
-            'slug' => 'user',
-            'name' => 'User',
+        User::create([
+            'name' => 'employee',
+            'email' => 'employee@employee.com',
+            'employee_id' => $employee->id,
+            'role' => 'user',
+            'password' => Hash::make('employee@employee.com'),
         ]);
-        $user->roles()->sync($role->id);
     }
 }
