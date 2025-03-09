@@ -18,7 +18,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4
       with:
         server: ${{ secrets.ftp.believerscampmeeting.com }}
-        username: ${{ secrets.attendance@attendance.believerscampmeeting.com }}
+        username: ${{ secrets.ATTENDANCE_FTP_HOST }}
         password: ${{ secrets.arWe5?-c2=qW }}
         port: ${{ secrets.21 }}
         server-dir: ${{ secrets.attendance.believerscampmeeting.com }}/
@@ -32,7 +32,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.ftp.believerscampmeeting.com }}
-        username: ${{ secrets.attendance@attendance.believerscampmeeting.com }}
+        username: ${{ secrets.ATTENDANCE_FTP_HOST }}
         password: ${{ secrets.arWe5?-c2=qW }}
         script: |
           cd ${{ secrets.attendance.believerscampmeeting.com }}
