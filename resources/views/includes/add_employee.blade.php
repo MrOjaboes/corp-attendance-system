@@ -8,7 +8,7 @@
 
             </div>
 
-            <h4 class="modal-title"><b>Add Employee</b></h4>
+            <h4 class="modal-title"><b>Add Staff Member</b></h4>
             <div class="modal-body">
 
                 <div class="card-body text-left">
@@ -17,24 +17,16 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Employee Name" id="name" name="name"
-                                required />
-                        </div>
-                        <div class="form-group">
-                            <label for="position">Position</label>
-                            <input type="text" class="form-control" placeholder="Enter Employee Name" id="position" name="position"
+                            <input type="text" class="form-control" placeholder="Enter full Name" id="name" name="name"
                                 required />
                         </div>
 
-                        
                         <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">Email</label>
-
-
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
 
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="schedule" class="col-sm-3 control-label">Schedule</label>
 
 
@@ -47,7 +39,7 @@
 
                             </select>
 
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <div>

@@ -12,14 +12,13 @@
                           <li class="">
                               <a href="{{ route('home') }}"
                                   class="waves-effect {{ request()->is('home') || request()->is('home') ? 'mm active' : '' }}">
-                                  <i class="ti-home"></i><span
-                                      class="badge badge-primary badge-pill float-right">2</span> <span> Home </span>
+                                  <i class="ti-home"></i><span> Home </span>
                               </a>
                           </li>
                           <li class="">
                               <a href="{{route('staff.attendance')}}"
                                   class="waves-effect {{ request()->is('attendance') || request()->is('attendance') ? 'mm active' : '' }}">
-                                  <i class="dripicons-to-do"></i> <span> Attendance Sheet </span>
+                                  <i class="dripicons-to-do"></i> <span> Attendance Report </span>
                               </a>
                           </li>
                       @endif
@@ -50,7 +49,7 @@
 
                           <li class="menu-title">Management</li>
 
-                          <li class="">
+                          {{-- <li class="">
                               <a href="/schedule"
                                   class="waves-effect {{ request()->is('schedule') || request()->is('schedule/*') ? 'mm active' : '' }}">
                                   <i class="ti-time"></i> <span> Schedule </span>
@@ -62,7 +61,7 @@
                                   <i class="dripicons-to-do"></i> <span> Attendance Sheet </span>
                               </a>
                           </li>
-
+--}}
                           <li class="">
                               <a href="/sheet-report"
                                   class="waves-effect {{ request()->is('sheet-report') || request()->is('sheet-report/*') ? 'mm active' : '' }}">
@@ -76,13 +75,14 @@
                                   <i class="ti-calendar"></i> <span> Attendance Logs </span>
                               </a>
                           </li>
+                           {{--
                           <li class="">
                               <a href="/latetime"
                                   class="waves-effect {{ request()->is('latetime') || request()->is('latetime/*') ? 'mm active' : '' }}">
                                   <i class="dripicons-warning"></i><span> Late Time </span>
                               </a>
                           </li>
-                          <li class="">
+                         <li class="">
                               <a href="/leave"
                                   class="waves-effect {{ request()->is('leave') || request()->is('leave/*') ? 'mm active' : '' }}">
                                   <i class="dripicons-backspace"></i> <span> Leave </span>
@@ -100,7 +100,7 @@
                                   class="waves-effect {{ request()->is('finger_device') || request()->is('finger_device/*') ? 'mm active' : '' }}">
                                   <i class="fas fa-fingerprint"></i> <span> Biometric Device </span>
                               </a>
-                          </li>
+                          </li>  --}}
                       @endif
                   </ul>
 

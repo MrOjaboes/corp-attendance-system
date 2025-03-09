@@ -15,17 +15,17 @@
 
 <nav class="navbar-custom">
     <ul class="navbar-right d-flex list-inline float-right mb-0">
-        <li class="dropdown notification-list d-none d-md-block">
+        {{-- <li class="dropdown notification-list d-none d-md-block">
             <form role="search" class="app-search">
                 <div class="form-group mb-0">
                     <input type="text" class="form-control" placeholder="Search..">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
             </form>
-        </li>
+        </li> --}}
 
         <!-- language-->
-        <li class="dropdown notification-list d-none d-md-block">
+        {{-- <li class="dropdown notification-list d-none d-md-block">
             <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="assets/images/flags/us_flag.jpg" class="mr-2" height="12" alt=""/> English <span class="mdi mdi-chevron-down"></span>
             </a>
@@ -36,7 +36,7 @@
                 <a class="dropdown-item" href="#"><img src="assets/images/flags/spain_flag.jpg" alt="" height="16" /><span> Spanish </span></a>
                 <a class="dropdown-item" href="#"><img src="assets/images/flags/russia_flag.jpg" alt="" height="16" /><span> Russian </span></a>
             </div>
-        </li>
+        </li> --}}
 
         <!-- full screen -->
         <li class="dropdown notification-list d-none d-md-block">
@@ -46,7 +46,7 @@
         </li>
 
         <!-- notification -->
-        <li class="dropdown notification-list">
+        {{-- <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <i class="mdi mdi-bell-outline noti-icon"></i>
                 <span class="badge badge-pill badge-danger noti-icon-badge">3</span>
@@ -88,7 +88,7 @@
                         View all <i class="fi-arrow-right"></i>
                     </a>
             </div>
-        </li>
+        </li> --}}
         <li class="dropdown notification-list">
             <div class="dropdown notification-list nav-pro-img">
                 <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -97,7 +97,7 @@
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                     <!-- item-->
                     <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>
-            
+
                     {{-- <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a> --}}
                     <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>
                     <div class="dropdown-divider"></div>

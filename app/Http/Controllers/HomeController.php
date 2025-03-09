@@ -27,25 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //Dashboard statistics
-        $totalEmp =  count(Employee::all());
-        $AllAttendance = count(Attendance::whereAttendance_date(date("Y-m-d"))->get());
-        $ontimeEmp = count(Attendance::whereAttendance_date(date("Y-m-d"))->whereStatus('1')->get());
-        $latetimeEmp = count(Attendance::whereAttendance_date(date("Y-m-d"))->whereStatus('0')->get());
 
-        if ($AllAttendance > 0) {
-            $percentageOntime = str_split(($ontimeEmp / $AllAttendance) * 100, 4)[0];
-        } else {
-            $percentageOntime = 0;
-        }
-
-        $data = [$totalEmp, $ontimeEmp, $latetimeEmp, $percentageOntime];
-
-        return view('home.index')->with(['data' => $data]);
-    }
-
-    public function attendance()
-    {
         $employee = Employee::find(auth()->user()->employee_id);
         $now = now()->setTimezone('Africa/Lagos');
         $startTime = $now->copy()->startOfDay(); // 12:00 AM
@@ -53,12 +35,19 @@ class HomeController extends Controller
 
         if ($now->greaterThanOrEqualTo($endTime)) {
             // If it's past 10 AM, attendance is closed
-            return view('home.attendance', ['attendanceOpen' => true, 'countdownTime' => 0,'employee'=>$employee]);
+            return view('home.index', ['attendanceOpen' => false, 'countdownTime' => 0, 'employee' => $employee]);
         }
 
         // Calculate countdown time in milliseconds for JavaScript
         $countdownTime = $endTime->timestamp * 1000;
-        return view('home.attendance', ['attendanceOpen' => true, 'countdownTime' => $countdownTime,'employee'=>$employee]);
+
+        return view('home.index', ['attendanceOpen' => true, 'countdownTime' => $countdownTime, 'employee' => $employee]);
+    }
+
+    public function attendance()
+    {
+        $attendances = Attendance::where('emp_id', auth()->user()->employee_id)->get();
+        return view('home.attendance', compact('attendances'));
     }
 
     public function CheckStore(Request $request)

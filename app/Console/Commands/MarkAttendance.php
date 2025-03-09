@@ -18,7 +18,7 @@ class MarkAttendance extends Command
         // Mark attendance for users who have not submitted
         Attendance::whereDate('created_at', $now)
             ->whereNull('status') // Assuming 'status' column exists
-            ->update(['status' => 'absent']);
+            ->update(['status' => 0]);
 
         $this->info('Attendance marked for users who missed submission.');
     }

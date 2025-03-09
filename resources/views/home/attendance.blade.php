@@ -6,92 +6,89 @@
         media="screen">
 @endsection
 
+@section('breadcrumb')
+    <div class="col-sm-6">
+        <h4 class="page-title text-left">Attendance</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('staff.attendance')}}">Attendance</a></li>
 
-@section('content')
-    <div class="card">
 
-        <div class="card-body">
-            <h3>{{ ucfirst($employee->name) }}'s Attendance for
-                {{ \Carbon\Carbon::createFromDate(today())->format('D d M, Y') }}</h3>
-
-        </div>
+        </ol>
     </div>
- <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-
-                    @if ($attendanceOpen)
-                    <h5>Time Left to Submit Attendance: <span id="countdown"></span></h5>
-
-                        <form action="{{ route('staff.attendance-store') }}" method="post">
-
-
-                            @csrf
-                            <input type="hidden" name="emp_id" value="{{ $employee->id }}">
-
-
-                            @php
-
-                                $date_picker = \Carbon\Carbon::createFromDate(today())->format('Y-m-d');
-                            @endphp
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input checkmark" style="height: 40px" id="check_box"
-                                    name="attd[{{ $date_picker }}][{{ $employee->id }}]" required type="checkbox"
-                                    id="inlineCheckbox1" value="1">
-
-                                    <button type="submit" class="btn btn-success" style="display: flex; margin:10px">Check In</button>
-                            </div>
-
-                        </form>
-                    @else
-                        <p id="elapsed-message" style="color:red; font-weight:bold;">Time Elapsed. Attendance is closed.</p>
-                    @endif
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3"></div>
- </div>
- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let countdownTime = {{ $countdownTime }};
-        let countdownElement = document.getElementById("countdown");
-        let attendanceForm = document.getElementById("attendance-form");
-        let elapsedMessage = document.getElementById("elapsed-message");
-
-        function updateCountdown() {
-            let now = new Date().getTime();
-            let timeLeft = countdownTime - now;
-
-            if (timeLeft > 0) {
-                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
-                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-
-                setTimeout(updateCountdown, 1000);
-            } else {
-                attendanceForm.style.display = "none"; // Hide form
-                elapsedMessage.style.display = "block"; // Show "Time Elapsed" message
-            }
-        }
-
-        updateCountdown();
-    });
-</script>
 @endsection
 
-<style>
-    .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 50px;
-  background-color: #eee;
-}
-</style>
 
+@section('content')
+    @include('includes.flash')
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4>My Attendance Summary</h4>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="table-rep-plugin">
+                        <div class="table-responsive mb-0" data-pattern="priority-columns">
+                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+
+                                <thead>
+                                    <tr>
+                                        <th data-priority="1">Date</th>
+                                        <th data-priority="4">Time</th>
+                                        <th data-priority="4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach ($attendances as $attendance)
+                                        <tr>
+                                            <td>{{ $attendance->attendance_date }}</td>
+                                            <td>{{ $attendance->attendance_time }}</td>
+                                            <td>
+                                                @if ($attendance->status == 1)
+                                                    <i class="fa fa-check text-success"></i>
+                                                @else
+                                                    <i class="fa fa-check text-danger"></i>
+                                                @endif
+                                            </td>
+
+
+                                        </tr>
+                                    @endforeach
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+@endsection
+
+
+@section('script')
+    <!-- Responsive-table-->
+    <script src="{{ URL::asset('plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js') }}"></script>
+@endsection
+
+@section('script')
+    <script>
+        $(function() {
+            $('.table-responsive').responsiveTable({
+                addDisplayAllBtn: 'btn btn-secondary'
+            });
+        });
+    </script>
+@endsection
